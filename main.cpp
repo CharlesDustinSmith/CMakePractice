@@ -1,12 +1,20 @@
 #include <iostream>
-#include "Adder/adder.h"
 #include <GLFW/glfw3.h>
 #include <HelloWorldConfig.h>
+#ifdef USE_ADDER
+	#include <adder.h>
+#endif
 
 int main( int argc, char *argv[] ) 
 {
 	std::cout << "Hello World from Charles Smith." << std::endl;
-	std::cout << "Testing out adder " << add( 72.3f, 73.8f ) << std::endl;
+
+	#ifdef USE_ADDER
+		std::cout << "Testing out adder " << add( 72.3f, 73.8f ) << std::endl;
+	#else
+		std::cout << "USE_ADDER=OFF therefore the adder library was not used in the source code." << std::endl;
+	#endif
+
 	std::cout << "Program name : " << HelloWorld_NAME << std::endl;
 	std::cout << "Program Version : " << HelloWorld_VER << std::endl;
 	std::cout << "argv[0]: " << argv[0] << " Version: " << HelloWorld_VERSION_MAJOR 
