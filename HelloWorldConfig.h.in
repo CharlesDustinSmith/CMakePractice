@@ -1,0 +1,11 @@
+#ifndef INCLUDE_GUARD
+#define INCLUDE_GUARD
+
+#define HelloWorld_NAME "@HelloWorld_NAME@"
+#define HelloWorld_VER "@HelloWorld_VERSION@"
+#define HelloWorld_VERSION_MAJOR "@HelloWorld_VERSION_MAJOR@"
+#define HelloWorld_VERSION_MINOR "@HelloWorld_VERSION_MINOR@"
+#define HelloWorld_VERSION_PATCH "@HelloWorld_VERSION_PATCH@"
+#define PROJECT_VER "@PROJECT_VERSION@"
+
+#endif
