@@ -6,6 +6,8 @@
 #define HelloWorld_VERSION_MAJOR "@HelloWorld_VERSION_MAJOR@"
 #define HelloWorld_VERSION_MINOR "@HelloWorld_VERSION_MINOR@"
 #define HelloWorld_VERSION_PATCH "@HelloWorld_VERSION_PATCH@"
-#define PROJECT_VER "@PROJECT_VERSION@"
+
+#cmakedefine USE_ADDER  //Ignore the red underline, this does not generate an error but I do not know how to get rid of the 
+                        //red underline without turning off syntax help, which I would like to avoid doing so.
 
 #endif
