@@ -2,27 +2,31 @@ cmake_minimum_required(VERSION 3.22.1)
 
 project(HelloWorld VERSION 1.0.0)
 
+set(CMAKE_MODULE_PATH cmake)
+
+find_package(GLEW REQUIRED)
+
 # FIND LIBRARY FOR CMAKE 3.22.1 (NO [REQUIRED] IN CMAKE YET)
-find_library(myglewlib glew NAMES glew2 GLEW GLEW2 DOC "glew library")
-if(${myglewlib} STREQUAL myglewlib-NOTFOUND)
-    message(FATAL_ERROR "no glew found, the Names or suggested libraries could be wrong or you did not run <sudo apt-get install libglew-dev>")
-else()
-    message(STATUS "Glew library found, :)")
-endif()
+# find_library(myglewlib glew NAMES glew2 GLEW GLEW2 DOC "glew library")
+# if(${myglewlib} STREQUAL myglewlib-NOTFOUND)
+#     message(FATAL_ERROR "no glew found, the Names or suggested libraries could be wrong or you did not run <sudo apt-get install libglew-dev>")
+# else()
+#     message(STATUS "Glew library found, :)")
+# endif()
 
-find_library(myglulib glu NAMES GLU DOC "glu library")
-if(${myglulib} STREQUAL myglulib-NOTFOUND)
-    message(FATAL_ERROR "No GLU Library found, the names maybe wrong or you did not sudo apt install it.")
-else()
-    message(STATUS "GLU Library found, :)")
-endif()
+# find_library(myglulib glu NAMES GLU DOC "glu library")
+# if(${myglulib} STREQUAL myglulib-NOTFOUND)
+#     message(FATAL_ERROR "No GLU Library found, the names maybe wrong or you did not sudo apt install it.")
+# else()
+#     message(STATUS "GLU Library found, :)")
+# endif()
 
-find_library(mygllib gl NAMES GL DOC "gl library")
-if(${mygllib})
-    message(FATAL_ERROR "No GL Library found, the names maybe wrong or you may not have GLFW set up correctly.")
-else()
-    message(STATUS "GL library found, :)")
-endif()
+# find_library(mygllib gl NAMES GL DOC "gl library")
+# if(${mygllib})
+#     message(FATAL_ERROR "No GL Library found, the names maybe wrong or you may not have GLFW set up correctly.")
+# else()
+#     message(STATUS "GL library found, :)")
+# endif()
 
 # Adder use logic 
 option(USE_ADDER "A simple library for adding 2 floats" ON)
@@ -67,6 +71,7 @@ add_subdirectory(external/glfw)
 target_include_directories(${PROJECT_NAME} 
     PUBLIC external/glfw/include
     ${EXTRA_INCLUDE_DIRS}
+    ${GLEW_INCLUDE_DIRS}
 )
 
 target_link_directories(${PROJECT_NAME} 
@@ -74,7 +79,7 @@ target_link_directories(${PROJECT_NAME}
     ${EXTRA_LIB_DIRS}
 )
 
-target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw ${myglewlib} ${myglulib} ${mygllib})
+target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw ${GLEW_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/HelloWorldConfig.h" DESTINATION include)
