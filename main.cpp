@@ -1,6 +1,9 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <HelloWorldConfig.h>
+#include <GL/glew.h>
+#include <GL/glut.h>
+#include <GL/gl.h>
 #ifdef USE_ADDER
 	#include <adder.h>
 #endif

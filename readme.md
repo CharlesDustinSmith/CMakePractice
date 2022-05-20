@@ -22,3 +22,7 @@ linux commmand line ez mode
     cd HelloWorld-1.0.0-Linux/bin
     ./HelloWorld
 ```
+
+###Also install the following VSCode extension tools to make development a bit more easier.
+1. CMake by: `twxs`
+2. CMake Tools by: `Microsoft`
