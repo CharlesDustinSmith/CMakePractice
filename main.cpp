@@ -4,6 +4,7 @@
 #ifdef USE_ADDER
 	#include <adder.h>
 #endif
+#include "boost/accumulators"
 
 int main( int argc, char *argv[] ) 
 {

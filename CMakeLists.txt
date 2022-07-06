@@ -13,11 +13,18 @@ if(USE_ADDER)
     list(APPEND EXTRA_LINKS adder)
 endif()
 
+set(CMAKE_TOOLCHAIN_FILE "/home/charlessmith/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
 configure_file(HelloWorldConfig.h.in HelloWorldConfig.h)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR})
+find_package(boost)
+
+target_include_directories(${PROJECT_NAME} 
+    PUBLIC ${PROJECT_BINARY_DIR}
+    /home/charlessmith/vcpkg/packages/boost-accumulators_x64-linux/include
+)
 
 # DOWNLOAD ALL THE SUBMODULES
 find_package(Git QUIET)
@@ -44,21 +51,24 @@ add_subdirectory(external/glfw)
 
 target_include_directories(${PROJECT_NAME} 
     PUBLIC external/glfw/include
+    /home/charlessmith/vcpkg/packages/boost-accumulators_x64-linux/include
     ${EXTRA_INCLUDE_DIRS}
 )
 
 target_link_directories(${PROJECT_NAME} 
     PRIVATE external/gflw/src
+    /home/charlessmith/vcpkg/installed/x64-linux/lib
     ${EXTRA_LIB_DIRS}
 )
 
-target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw)
+target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw boost)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/HelloWorldConfig.h" DESTINATION include)
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+set(CPACK_PROJECT_NAME "${PROJECT_NAME}")
 set(CPACK_PACKAGE_VERSION_MAJOR "${HelloWorld_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${HelloWorld_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${HelloWorld_VERSION_PATCH}")
