@@ -14,16 +14,14 @@ if(USE_ADDER)
 endif()
 
 set(CMAKE_TOOLCHAIN_FILE "/home/charlessmith/vcpkg/scripts/buildsystems/vcpkg.cmake")
+set(Boost_INCLUDE_DIR "")
 
 configure_file(HelloWorldConfig.h.in HelloWorldConfig.h)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
-find_package(boost)
-
 target_include_directories(${PROJECT_NAME} 
     PUBLIC ${PROJECT_BINARY_DIR}
-    /home/charlessmith/vcpkg/packages/boost-accumulators_x64-linux/include
 )
 
 # DOWNLOAD ALL THE SUBMODULES
@@ -51,7 +49,6 @@ add_subdirectory(external/glfw)
 
 target_include_directories(${PROJECT_NAME} 
     PUBLIC external/glfw/include
-    /home/charlessmith/vcpkg/packages/boost-accumulators_x64-linux/include
     ${EXTRA_INCLUDE_DIRS}
 )
 
@@ -61,7 +58,7 @@ target_link_directories(${PROJECT_NAME}
     ${EXTRA_LIB_DIRS}
 )
 
-target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw boost)
+target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/HelloWorldConfig.h" DESTINATION include)
