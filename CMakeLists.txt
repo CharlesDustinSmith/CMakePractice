@@ -4,13 +4,10 @@ project(HelloWorld VERSION 1.0.0)
 
 set(CMAKE_MODULE_PATH cmake)
 
-<<<<<<< HEAD
 # For vcpkg stuff 
 set(CMAKE_TOOLCHAIN_FILE "C:/Users/cdsmi/vcpkg/scripts/buildsystems/vcpkg.cmake")
 
 
-=======
->>>>>>> e5421dee6f417cec3b5ea6bd59e2d3d38a1ab045
 # Adder use logic 
 option(USE_ADDER "A simple library for adding 2 floats" ON)
 
@@ -54,10 +51,6 @@ add_subdirectory(external/glfw)
 target_include_directories(${PROJECT_NAME} 
     PUBLIC external/glfw/include
     ${EXTRA_INCLUDE_DIRS}
-<<<<<<< HEAD
-=======
-    ${GLEW_INCLUDE_DIRS}
->>>>>>> e5421dee6f417cec3b5ea6bd59e2d3d38a1ab045
 )
 
 target_link_directories(${PROJECT_NAME} 
@@ -67,16 +60,11 @@ target_link_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw)
 
-<<<<<<< HEAD
+
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-=======
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/HelloWorldConfig.h" DESTINATION include)
 
-target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw ${GLEW_LIBRARIES})
-
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
->>>>>>> e5421dee6f417cec3b5ea6bd59e2d3d38a1ab045
 install(FILES "${PROJECT_BINARY_DIR}/HelloWorldConfig.h" DESTINATION include)
 
 include(InstallRequiredSystemLibraries)
