@@ -1,12 +1,7 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <HelloWorldConfig.h>
-<<<<<<< HEAD
-=======
-#include <GL/glew.h>
-#include <GL/glut.h>
-#include <GL/gl.h>
->>>>>>> 23cc1b763cd3c1b6a672cbd05b08772f575a759d
+
 #ifdef USE_ADDER
 	#include <adder.h>
 #endif
