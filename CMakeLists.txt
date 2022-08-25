@@ -4,10 +4,6 @@ project(HelloWorld VERSION 1.0.0)
 
 set(CMAKE_MODULE_PATH cmake)
 
-# For vcpkg stuff 
-set(CMAKE_TOOLCHAIN_FILE "C:/Users/cdsmi/vcpkg/scripts/buildsystems/vcpkg.cmake")
-
-
 # Adder use logic 
 option(USE_ADDER "A simple library for adding 2 floats" ON)
 
@@ -20,9 +16,17 @@ endif()
 
 configure_file(HelloWorldConfig.h.in HelloWorldConfig.h)
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} 
+    main.cpp
+)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_BINARY_DIR})
+# For vcpkg stuff 
+set(CMAKE_TOOLCHAIN_FILE "C:/Users/cdsmi/vcpkg/scripts/buildsystems/vcpkg.cmake")
+set(CMAKE_PREFIX_PATH "C:/Users/cdsmi/vcpkg/installed/x64-windows/share")
+
+set(OpenCV_DIR "C:/Users/cdsmi/vcpkg/installed/x64-windows/share/opencv")
+
+find_package(OpenCV REQUIRED)
 
 # DOWNLOAD ALL THE SUBMODULES
 find_package(Git QUIET)
@@ -49,16 +53,25 @@ endif()
 add_subdirectory(external/glfw)
 
 target_include_directories(${PROJECT_NAME} 
-    PUBLIC external/glfw/include
+    PUBLIC 
+    external/glfw/include
+    ${PROJECT_BINARY_DIR}
     ${EXTRA_INCLUDE_DIRS}
+    ${OpenCV_INCLUDE_DIRS}
 )
 
 target_link_directories(${PROJECT_NAME} 
-    PRIVATE external/gflw/src
+    PRIVATE 
+    external/gflw/src
     ${EXTRA_LIB_DIRS}
+    ${OpenCV_LIB_DIR}
 )
 
-target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw)
+target_link_libraries(${PROJECT_NAME} 
+    ${EXTRA_LINKS} 
+    glfw
+    ${OpenCV_LIBS}
+)
 
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
