@@ -1,4 +1,4 @@
-cd out/build
-cpack -C "Debug"
+cd out/build/
+call cpack -C "Debug"
 
 @REM or can use cpack -C "Release"

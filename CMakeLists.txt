@@ -4,33 +4,17 @@ project(HelloWorld VERSION 1.0.0)
 
 set(CMAKE_MODULE_PATH cmake)
 
-# Adder use logic 
-option(USE_ADDER "A simple library for adding 2 floats" ON)
-
-if(USE_ADDER)
-    add_subdirectory(Adder)
-    list(APPEND EXTRA_LIB_DIRS Adder)
-    list(APPEND EXTRA_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/Adder")
-    list(APPEND EXTRA_LINKS adder)
-endif()
-
-configure_file(HelloWorldConfig.h.in HelloWorldConfig.h)
-
-add_executable(${PROJECT_NAME} 
-    main.cpp
-)
-
 # For vcpkg stuff 
 set(CMAKE_TOOLCHAIN_FILE "C:/Users/cdsmi/vcpkg/scripts/buildsystems/vcpkg.cmake")
 set(CMAKE_PREFIX_PATH "C:/Users/cdsmi/vcpkg/installed/x64-windows/share")
-
 set(OpenCV_DIR "C:/Users/cdsmi/vcpkg/installed/x64-windows/share/opencv")
 
+# Find the package include directorys and find the lirbaries
+find_package(GLEW REQUIRED)
 find_package(OpenCV REQUIRED)
 
 # DOWNLOAD ALL THE SUBMODULES
 find_package(Git QUIET)
-
 if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 # Update submodules as needed
     option(GIT_SUBMODULE "Check submodules during build" ON)
@@ -52,32 +36,20 @@ endif()
 
 add_subdirectory(external/glfw)
 
-target_include_directories(${PROJECT_NAME} 
-    PUBLIC 
-    external/glfw/include
-    ${PROJECT_BINARY_DIR}
-    ${EXTRA_INCLUDE_DIRS}
-    ${OpenCV_INCLUDE_DIRS}
-)
+# Adder use logic 
+option(USE_ADDER "A simple library for adding 2 floats" ON)
+option(TEST_ADDER "Test library for adding 2 floats." ON)
+option(TEST_GRAPHICS "Test launching opengl with glfw window." ON)
 
-target_link_directories(${PROJECT_NAME} 
-    PRIVATE 
-    external/gflw/src
-    ${EXTRA_LIB_DIRS}
-    ${OpenCV_LIB_DIR}
-)
+if(TEST_ADDER)
+    add_subdirectory(Adder)
+    list(APPEND EXTRA_LIB_DIRS Adder)
+    list(APPEND EXTRA_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/Adder")
+    list(APPEND EXTRA_LINKS adder)
+endif()
 
-target_link_libraries(${PROJECT_NAME} 
-    ${EXTRA_LINKS} 
-    glfw
-    ${OpenCV_LIBS}
-)
+configure_file(HelloWorldConfig.h.in HelloWorldConfig.h)
 
-
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-install(FILES "${PROJECT_BINARY_DIR}/HelloWorldConfig.h" DESTINATION include)
-
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/HelloWorldConfig.h" DESTINATION include)
 
 include(InstallRequiredSystemLibraries)
@@ -86,3 +58,7 @@ set(CPACK_PACKAGE_VERSION_MAJOR "${HelloWorld_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${HelloWorld_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${HelloWorld_VERSION_PATCH}")
 include(CPack) 
+
+if(TEST_ADDER OR TEST_GRAPHICS)
+    add_subdirectory(test)
+endif()

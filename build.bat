@@ -1,2 +1,2 @@
 cd out/build
-MSBuild.exe .\HelloWorld.sln
+call MSBuild.exe .\HelloWorld.sln
