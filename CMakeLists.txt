@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.22.1)
 
 project(HelloWorld VERSION 1.0.0)
 
+
 # Adder use logic 
 option(USE_ADDER "A simple library for adding 2 floats" ON)
 
@@ -13,8 +14,8 @@ if(USE_ADDER)
     list(APPEND EXTRA_LINKS adder)
 endif()
 
-set(CMAKE_TOOLCHAIN_FILE "/home/charlessmith/vcpkg/scripts/buildsystems/vcpkg.cmake")
-set(Boost_INCLUDE_DIR "")
+find_package(Boost REQUIRED COMPONENTS program_options)
+find_package(Boost REQUIRED COMPONENTS system)
 
 configure_file(HelloWorldConfig.h.in HelloWorldConfig.h)
 
@@ -50,15 +51,20 @@ add_subdirectory(external/glfw)
 target_include_directories(${PROJECT_NAME} 
     PUBLIC external/glfw/include
     ${EXTRA_INCLUDE_DIRS}
+    ${Boost_INCLUDE_DIRS}    
 )
 
 target_link_directories(${PROJECT_NAME} 
     PRIVATE external/gflw/src
-    /home/charlessmith/vcpkg/installed/x64-linux/lib
     ${EXTRA_LIB_DIRS}
 )
 
-target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw )
+target_link_libraries(${PROJECT_NAME} 
+    ${EXTRA_LINKS} 
+    glfw
+    Boost::program_options
+    Boost::system
+)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/HelloWorldConfig.h" DESTINATION include)

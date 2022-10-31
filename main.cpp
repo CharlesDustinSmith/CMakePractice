@@ -1,13 +1,24 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <HelloWorldConfig.h>
+#include <boost/accumulators/accumulators.hpp>
+#include <boost/accumulators/statistics.hpp>
+#include <boost/program_options.hpp>
 #ifdef USE_ADDER
 	#include <adder.h>
 #endif
 
+using namespace boost::accumulators;
+
 int main( int argc, char *argv[] ) 
 {
 	std::cout << "Hello World from Charles Smith." << std::endl;
+
+	accumulator_set<int, features<tag::count>> acc;
+	acc(4);
+	acc(-6);
+	acc(9);
+	std::cout << "This is the accumulator: " << count(acc) << '\n';	
 
 	#ifdef USE_ADDER
 		std::cout << "Testing out adder " << add( 72.3f, 73.8f ) << std::endl;
